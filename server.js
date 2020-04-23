@@ -27,8 +27,37 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", {
+mongoose.connect("mongodb://localhost/newsScraperDB", {
   useNewUrlParser: true,
+});
+
+////////////////////////
+//Routes
+////////////////////////
+
+//a GET route for scraping the NYT website
+app.get("/scrape", function (req, res) {
+  axios.get("https://www.laist.com").then(function (response) {
+    var $ = cheerio.load(response.data);
+
+    $("a.the-latest-list__link").each(function (i, element) {
+      var result = {};
+      result.title = $(this).text();
+      result.link = $(this).attr("href");
+      // Create a new Article using the `result` object built from scraping
+      db.Article.create(result)
+        .then(function (dbArticle) {
+          // View the added result in the console//
+          console.log(dbArticle);
+        })
+        .catch(function (err) {
+          // If an error occurred, log it
+          console.log(err);
+        });
+    });
+    // Send a message to the client
+    res.send("Scrape Complete");
+  });
 });
 
 // Start the server
