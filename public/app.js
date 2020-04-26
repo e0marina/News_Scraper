@@ -10,7 +10,7 @@
 
 // Grab the articles as a json
 $.getJSON("/articles", function (data) {
-  // first empty the div
+  // first empty the divs
   $("#articles").empty();
   // debugger;
   // For each one
@@ -22,8 +22,11 @@ $.getJSON("/articles", function (data) {
         "'>" +
         data[i].title +
         "<br />" +
+        "<br />" +
         data[i].link +
-        "</p>"
+        "</p>" +
+        "<br />" +
+        "<hr>"
     );
   }
 });
