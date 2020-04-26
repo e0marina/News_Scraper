@@ -53,7 +53,7 @@ $(document).on("click", "p", function () {
       $("#comments").append(
         "<button data-id='" +
           data._id +
-          "' id='savecomment'>Save comment</button>"
+          "'id='savecomment'>Save comment</button>"
       );
 
       // If there's a comment in the article
