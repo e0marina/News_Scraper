@@ -10,6 +10,7 @@ var ArticleSchema = new Schema({
   title: {
     type: String,
     required: true,
+    unique: true, //should keep duplicate articles out of the db
   },
   // `link` is required and of type String
   link: {
