@@ -40,7 +40,7 @@ mongoose.connect(
 ////////////////////////
 
 //a GET route for scraping the  website
-app.get("/scrape", function (req, res) {
+app.get("/", function (req, res) {
   axios.get("https://www.laist.com").then(function (response) {
     var $ = cheerio.load(response.data);
 
