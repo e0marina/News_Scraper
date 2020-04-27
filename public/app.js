@@ -12,6 +12,7 @@
 $.getJSON("/articles", function (data) {
   // first empty the divs
   $("#articles").empty();
+  $("#comments").empty();
   // debugger;
   // For each one
   for (var i = 0; i < data.length; i++) {
@@ -26,48 +27,53 @@ $.getJSON("/articles", function (data) {
         data[i].link +
         "</p>" +
         "<br />" +
+        "<input id='titleinput' name='title' placeholder='user name'>" +
+        "<textarea id='bodyinput' name='body' placeholder='enter comment here'></textarea>" +
+        "<button data-id='" +
+        data._id +
+        "'id='savecomment'>Save comment</button>" +
         "<hr>"
     );
   }
 });
 
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function () {
-  // Empty the comments from the comments section
-  $("#comments").empty();
-  // Save the id from the p tag
-  var thisId = $(this).attr("data-id");
+// $(document).on("click", "p", function () {
+//   // Empty the comments from the comments section
+//   // $("#comments").empty();
+//   // Save the id from the p tag
+//   var thisId = $(this).attr("data-id");
 
-  // Now make an ajax call for the Article
-  $.ajax({
-    method: "GET",
-    url: "/articles/" + thisId,
-  })
-    // With that done, add the comment information to the page
-    .then(function (data) {
-      console.log(data);
-      // The title of the article
-      $("#comments").append("<h2>" + data.title + "</h2>");
-      // An input to enter a new title
-      $("#comments").append("<input id='titleinput' name='title'>");
-      // A textarea to add a new comment body
-      $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
-      // A button to submit a new comment, with the id of the article saved to it
-      $("#comments").append(
-        "<button data-id='" +
-          data._id +
-          "'id='savecomment'>Save comment</button>"
-      );
+//   // Now make an ajax call for the Article
+//   $.ajax({
+//     method: "GET",
+//     url: "/articles/" + thisId,
+//   })
+//     // With that done, add the comment information to the page
+//     .then(function (data) {
+//       console.log(data);
+//       // The title of the article
+//       $("#comments").append("<h2>" + data.title + "</h2>");
+//       // An input to enter a new title
+//       $("#comments").append("<input id='titleinput' name='title'>");
+//       // A textarea to add a new comment body
+//       $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
+//       // A button to submit a new comment, with the id of the article saved to it
+//       $("#comments").append(
+//         "<button data-id='" +
+//           data._id +
+//           "'id='savecomment'>Save comment</button>"
+//       );
 
-      // If there's a comment in the article
-      if (data.comment) {
-        // Place the title of the comment in the title input
-        $("#titleinput").val(data.comment.title);
-        // Place the body of the comment in the body textarea
-        $("#bodyinput").val(data.comment.body);
-      }
-    });
-});
+//       // If there's a comment in the article
+//       if (data.comment) {
+//         // Place the title of the comment in the title input
+//         $("#titleinput").val(data.comment.title);
+//         // Place the body of the comment in the body textarea
+//         $("#bodyinput").val(data.comment.body);
+//       }
+//     });
+// });
 
 // When you click the savecomment button
 $(document).on("click", "#savecomment", function () {
