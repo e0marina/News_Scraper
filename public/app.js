@@ -8,35 +8,30 @@
 //   * If your app deletes stories every time someone visits, your users won't be able to see any comments except the ones that they post.
 ////////////////////////////////////////////////////////
 
-// Grab the articles as a json
-$.getJSON("/articles", function (data) {
-  // first empty the divs
-  $("#articles").empty();
-  $("#comments").empty();
-  // debugger;
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the information on the page
-    $("#articles").prepend(
-      "<p data-id='" +
-        data[i]._id +
-        "'>" +
-        data[i].title +
-        "<br />" +
-        "<br />" +
-        data[i].link +
-        "</p>" +
-        "<br />" +
-        "<input id='titleinput' name='title' placeholder='user name'>" +
-        "<textarea id='bodyinput' name='body' placeholder='enter comment here'></textarea>" +
-        "<button data-id='" +
-        data._id +
-        "'id='savecomment'>Save comment</button>" +
-        "<hr>"
-    );
-  }
+$(document).ready(function () {
+  // Grab the articles as a json
+  $.getJSON("/articles", function (data) {
+    // first empty the divs
+    $("#articles").empty();
+    $("#comments").empty();
+    // debugger;
+    // For each one
+    for (var i = 0; i < data.length; i++) {
+      // Display the information on the page
+      $("#articles").prepend(
+        "<p data-id='" +
+          data[i]._id +
+          "'>" +
+          data[i].title +
+          "<br />" +
+          "<br />" +
+          data[i].link +
+          "</p>" +
+          "<br />"
+      );
+    }
+  });
 });
-
 // When you click the savecomment button
 $(document).on("click", "#savecomment", function () {
   // Grab the id associated with the article from the submit button
@@ -60,6 +55,8 @@ $(document).on("click", "#savecomment", function () {
       // Empty the comments section
       $("#comments").empty();
     });
+
+  //append the comment to the appropriate article
 
   // Also, remove the values entered in the input and textarea for comment entry
   $("#titleinput").val("");

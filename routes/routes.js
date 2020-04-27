@@ -45,8 +45,6 @@ module.exports = function (app) {
 
   // Route for grabbing a specific Article by id, populate it with it's comment
   app.get("/articles/:id", function (req, res) {
-    // TODO
-    // ====
     db.Article.findById(req.params.id)
       .populate("comment")
       .then(function (dbArticle) {
@@ -64,7 +62,7 @@ module.exports = function (app) {
 
   // Route for saving/updating an Article's associated Comment
   app.post("/articles/:id", function (req, res) {
-    // save the new note that gets posted to the Comments collection
+    // save the new comment that gets posted to the Comments collection
     // then find an article from the req.params.id
     // and update it's "comment" property with the _id of the new comment
     db.Comment.create(req.body)
