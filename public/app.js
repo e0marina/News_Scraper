@@ -8,13 +8,13 @@
 //   * If your app deletes stories every time someone visits, your users won't be able to see any comments except the ones that they post.
 ////////////////////////////////////////////////////////
 
+//on page load will see articles, may not be the latest
 $(document).ready(function () {
   // Grab the articles as a json
   $.getJSON("/articles", function (data) {
     // first empty the divs
     $("#articles").empty();
-    $("#comments").empty();
-    // debugger;
+
     // For each one
     for (var i = 0; i < data.length; i++) {
       // Display the information on the page
@@ -41,6 +41,19 @@ $(document).ready(function () {
     }
   });
 });
+
+//get latest articles
+$("#scraper-btn").on("click", function (event) {
+  handleArticleScrape();
+});
+
+function handleArticleScrape() {
+  // This function handles the user clicking "scrape new article" button
+  $.get("/scrape").then(function (data) {
+    //reload page
+    window.location.reload();
+  });
+}
 // When you click the savecomment button
 $(document).on("click", "#savecomment", function () {
   // Grab the id associated with the article from the submit button
