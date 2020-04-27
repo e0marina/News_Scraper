@@ -19,15 +19,24 @@ $(document).ready(function () {
     for (var i = 0; i < data.length; i++) {
       // Display the information on the page
       $("#articles").prepend(
-        "<p data-id='" +
+        "<div class='card' data-id='" +
           data[i]._id +
           "'>" +
+          "<div class='card-header'>" +
           data[i].title +
-          "<br />" +
-          "<br />" +
+          "</div>" +
+          "<div class='card-body'>" +
+          "<p class='card-text'>" +
           data[i].link +
           "</p>" +
-          "<br />"
+          "</div>" +
+          "<a href='#' class='btn btn-primary'>" +
+          "Save Article" +
+          "</a>" +
+          "</div>" +
+          "</div>" +
+          "</br>" +
+          "</br>"
       );
     }
   });
