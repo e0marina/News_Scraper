@@ -5,11 +5,15 @@
 // Grab the articles as a json
 $.getJSON("/articles", function (data) {
   // first empty the div
+  // console.log(data);
+
   $("#articles").empty();
 
   // For each one
+
   for (var i = 0; i < data.length; i++) {
     // Display the information on the page
+
     $("#articles").prepend(
       "<div class='card' data-id='" +
         data[i]._id +
@@ -26,6 +30,10 @@ $.getJSON("/articles", function (data) {
         "Save Article" +
         "</a>" +
         "</br>" +
+        "<p class='" +
+        data[i]._id +
+        "'>" +
+        "</p>" +
         "<a href='#' data-id='" +
         data[i]._id +
         "' class='btn btn-primary' id='leave-comment'>" +
@@ -109,7 +117,8 @@ $(document).on("click", "#leave-comment", function () {
 $(document).on("click", "#saveComment", function () {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-  console.log(thisId);
+
+  // console.log(thisId);
 
   // Run a POST request to create the comment, using what's entered in the inputs
   $.ajax({
@@ -123,10 +132,16 @@ $(document).on("click", "#saveComment", function () {
     // With that done
     .then(function (data) {
       // Log the response
-      console.log(data);
+      // console.log(data);
+      let commentId = data.comment;
+
+      // // console.log(commentId);
+      $.getJSON("/comment/" + commentId, function (data) {
+        console.log(data.body);
+      });
+
+      // Also, remove the values entered in the input and textarea for comment entry
+
+      $("#bodyInput").val("");
     });
-
-  // Also, remove the values entered in the input and textarea for comment entry
-
-  $("#bodyInput").val("");
 });

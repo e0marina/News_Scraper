@@ -81,4 +81,18 @@ module.exports = function (app) {
         res.json(err);
       });
   });
+
+  // Route for grabbing a specific comment by id
+  app.get("/comment/:id", function (req, res) {
+    db.Comment.findById(req.params.id)
+
+      .then(function (dbArticle) {
+        // If all Comments are successfully found, send them back to the client
+        res.json(dbArticle);
+      })
+      .catch(function (err) {
+        // If an error occurs, send the error back to the client
+        res.json(err);
+      });
+  });
 };
