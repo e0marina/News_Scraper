@@ -7,13 +7,19 @@ $.getJSON("/articles", function (data) {
   // first empty the div
   // console.log(data);
 
+  render(data);
+});
+
+//get/scrape latest articles
+$("#scraper-btn").on("click", function (event) {
+  handleArticleScrape();
+});
+
+function render(data) {
   $("#articles").empty();
-
   // For each one
-
   for (var i = 0; i < data.length; i++) {
     // Display the information on the page
-
     $("#articles").prepend(
       "<div class='card' data-id='" +
         data[i]._id +
@@ -30,27 +36,22 @@ $.getJSON("/articles", function (data) {
         "Save Article" +
         "</a>" +
         "</br>" +
-        "<p class='" +
-        data[i]._id +
-        "'>" +
-        "</p>" +
         "<a href='#' data-id='" +
         data[i]._id +
         "' class='btn btn-primary' id='leave-comment'>" +
         "Leave a Comment" +
         "</a>" +
+        "<span id='" +
+        data[i]._id +
+        "'>" +
+        "</span>" +
         "</div>" +
         "</div>" +
         "</br>" +
         "</br>"
     );
   }
-});
-
-//get/scrape latest articles
-$("#scraper-btn").on("click", function (event) {
-  handleArticleScrape();
-});
+}
 
 function handleArticleScrape() {
   // This function handles the user clicking "scrape new article" button
@@ -90,7 +91,7 @@ $(document).on("click", "#leave-comment", function () {
     url: "/articles/" + commentId,
   }).then(function (data) {
     // console.log(data);
-    $("#leave-comment").hide();
+    // $("#leave-comment").hide();
     //textbox and button appear under the button clicked
     commentSection.append(
       "<br>" +
@@ -133,11 +134,11 @@ $(document).on("click", "#saveComment", function () {
     .then(function (data) {
       // Log the response
       // console.log(data);
-      let commentId = data.comment;
+      var commentId = data.comment;
 
-      // // console.log(commentId);
+      // console.log(commentId);
       $.getJSON("/comment/" + commentId, function (data) {
-        console.log(data.body);
+        $("span").append(data.body);
       });
 
       // Also, remove the values entered in the input and textarea for comment entry
