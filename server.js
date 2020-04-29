@@ -27,10 +27,13 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-process.env.MONGODB_URI ||
-  mongoose.connect("mongodb://localhost/newsScraperDB", {
+
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/newsScraperDB",
+  {
     useNewUrlParser: true,
-  });
+  }
+);
 
 //Routes
 require("./routes/routes")(app);
