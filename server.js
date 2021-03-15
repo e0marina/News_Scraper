@@ -32,6 +32,7 @@ mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/newsScraperDB",
   {
     useNewUrlParser: true,
+    useUnifiedTopology: true
   }
 );
 
